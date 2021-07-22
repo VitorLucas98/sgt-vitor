@@ -3,6 +3,8 @@ package br.com.basis.sgt.services;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import br.com.basis.sgt.services.exceptions.ObjectNotFoundException;
 @Service
 public class TarefaService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(TarefaService.class);
 	@Autowired
 	private TarefaRepository repository;
 
@@ -26,9 +29,13 @@ public class TarefaService {
 	
 	@Transactional(readOnly = true)
 	public TarefaDTO findById(Long id) {
+		LOGGER.info("id service"+id);
 		Optional<Tarefa> tarefa = repository.findById(id);
 		Tarefa entity = tarefa.orElseThrow(() -> new ObjectNotFoundException("Tarefa não encontrada"));
+		LOGGER.info("toString service"+entity.toString());
 		TarefaDTO dto = modelMapper.map(entity, TarefaDTO.class);
+		LOGGER.info("toString service dto"+dto.toString());
+		
 		return dto;
 	}
 
@@ -41,8 +48,7 @@ public class TarefaService {
 
 	@Transactional
 	public TarefaDTO insert(TarefaDTO dto) {
-		Tarefa entity = new Tarefa();
-		modelMapper.map(dto, Tarefa.class);
+		Tarefa entity = modelMapper.map(dto, Tarefa.class);
 		entity = repository.save(entity);
 		TarefaDTO tarefaDto = modelMapper.map(entity, TarefaDTO.class);
 		return tarefaDto;

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,12 +19,17 @@ import lombok.Setter;
 
 
 @Entity(name = "tb_tarefa")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Tarefa  implements Serializable{
+	@Override
+	public String toString() {
+		return "Tarefa [id=" + id + ", titulo=" + titulo + ", descricao=" + descricao + ", dataInicial=" + dataInicial
+				+ ", dataFinal=" + dataFinal + "]";
+	}
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id

@@ -8,16 +8,13 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class TarefaDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -40,4 +37,12 @@ public class TarefaDTO implements Serializable{
 	public Long getId() {
 		return id;
 	}
+
+	@Override
+	public String toString() {
+		return "TarefaDTO [id=" + id + ", titulo=" + titulo + ", descricao=" + descricao + ", dataInicial="
+				+ dataInicial + ", dataFinal=" + dataFinal + "]";
+	}
+	
+	
 }

@@ -4,6 +4,8 @@ import java.net.URI;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,13 +28,16 @@ import br.com.basis.sgt.services.TarefaService;
 @RestController
 @RequestMapping(value = "/tarefas")
 public class TarefaResource {
+	private static final Logger LOGGER = LoggerFactory.getLogger(TarefaResource.class);
 	
 	@Autowired
 	private TarefaService service;
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<TarefaDTO> findById(@PathVariable Long id){
+		LOGGER.info("id resource = "+id);
 		TarefaDTO tarefa = service.findById(id);
+		LOGGER.info("toString resource"+tarefa.toString());
 		return ResponseEntity.ok(tarefa);
 	}
 	
