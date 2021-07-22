@@ -2,6 +2,7 @@ package br.com.basis.sgt.services;
 
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -20,43 +21,43 @@ public class TarefaService {
 	@Autowired
 	private TarefaRepository repository;
 
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@Transactional(readOnly = true)
 	public TarefaDTO findById(Long id) {
 		Optional<Tarefa> tarefa = repository.findById(id);
 		Tarefa entity = tarefa.orElseThrow(() -> new ObjectNotFoundException("Tarefa não encontrada"));
-		return new TarefaDTO(entity);
+		TarefaDTO dto = modelMapper.map(entity, TarefaDTO.class);
+		return dto;
 	}
 
 	@Transactional(readOnly = true)
 	public Page<TarefaDTO> findAllPage(Pageable pageable) {
 		Page<Tarefa> list = repository.findAll(pageable);
-		return list.map(x -> new TarefaDTO(x));
+		Page<TarefaDTO> pageDTO = list.map( t -> modelMapper.map(t, TarefaDTO.class));
+		return pageDTO;
 	}
 
 	@Transactional
 	public TarefaDTO insert(TarefaDTO dto) {
 		Tarefa entity = new Tarefa();
-		copyDtoToEntity(entity, dto);
-		return new TarefaDTO(entity);
+		modelMapper.map(dto, Tarefa.class);
+		entity = repository.save(entity);
+		TarefaDTO tarefaDto = modelMapper.map(entity, TarefaDTO.class);
+		return tarefaDto;
 	}
 
 	@Transactional
 	public TarefaDTO update(TarefaDTO dto, Long id) {
 		Tarefa entity = repository.findById(id).
 				orElseThrow(() -> new ObjectNotFoundException("Tarefa não encontrada"));
-		copyDtoToEntity(entity, dto);
-		return new TarefaDTO(entity);
-	}
-	
-	private void copyDtoToEntity(Tarefa entity, TarefaDTO dto) {
-		entity.setTitulo(dto.getTitulo());
-		entity.setDescricao(dto.getDescricao());
-		entity.setDataInicial(dto.getDataInicial());
-		entity.setDataFinal(dto.getDataFinal());
+		modelMapper.map(dto, Tarefa.class);
 		entity = repository.save(entity);
+		TarefaDTO tarefaDto = modelMapper.map(entity, TarefaDTO.class);
+		return tarefaDto;
 	}
-	
-	
+		
 	public void delete(Long id) {
 		try {			
 			repository.deleteById(id);
