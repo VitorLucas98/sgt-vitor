@@ -1,48 +1,39 @@
 package br.com.basis.sgt.dtos;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import enums.StatusTarefa;
+import lombok.Data;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
-public class TarefaDTO implements Serializable{
-	private static final long serialVersionUID = 1L;
+@Data
+public class TarefaDTO {
 	
-	@EqualsAndHashCode.Include
+
 	private Long id;
 	
 	@NotBlank(message = "Informe um titulo")
 	private String titulo;
-	
-	@NotBlank(message = "Informe uma descrição")
-	private String descricao;
-	
+
 	@Future(message = "A data deve ser do futuro !")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataInicial;
-	
+
+	@Future(message = "A data deve ser do futuro !")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-	private LocalDateTime dataFinal;
+	private LocalDateTime dataPrevista;
 
-	public Long getId() {
-		return id;
-	}
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	private LocalDateTime dataEfetiva;
 
-	@Override
-	public String toString() {
-		return "TarefaDTO [id=" + id + ", titulo=" + titulo + ", descricao=" + descricao + ", dataInicial="
-				+ dataInicial + ", dataFinal=" + dataFinal + "]";
-	}
-	
-	
+	private String tipoTarefa;
+
+	private StatusTarefa status;
+
+	private List<ComentarioDTO> comentarios;
+
+	private Long idResponsavel;
 }

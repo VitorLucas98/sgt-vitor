@@ -1,36 +1,19 @@
 package br.com.basis.sgt.entities;
 
+import enums.StatusTarefa;
+import lombok.Data;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.List;
 
 
-@Entity(name = "tb_tarefa")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Tarefa  implements Serializable{
-	@Override
-	public String toString() {
-		return "Tarefa [id=" + id + ", titulo=" + titulo + ", descricao=" + descricao + ", dataInicial=" + dataInicial
-				+ ", dataFinal=" + dataFinal + "]";
-	}
-
+@Entity(name = "Tb_tarefa")
+public class Tarefa implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,13 +21,21 @@ public class Tarefa  implements Serializable{
 
 	private String titulo;
 
-	private String descricao;
-	
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataInicial;
-	
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-	private LocalDateTime dataFinal;
-	
-	
+
+	private LocalDateTime dataPrevista;
+
+	private LocalDateTime dataEfetiva;
+
+	private StatusTarefa status;
+
+	private String tipoTarefa;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_tarefa")
+	private List<Comentario> comentarios;
+
+	@ManyToOne
+	@JoinColumn(name = "id_responsavel")
+	private Responsavel responsavel;
 }

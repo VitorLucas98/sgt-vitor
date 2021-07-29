@@ -1,8 +1,10 @@
 package br.com.basis.sgt.services;
 
-import java.util.Optional;
-
-import org.modelmapper.ModelMapper;
+import br.com.basis.sgt.dtos.TarefaDTO;
+import br.com.basis.sgt.entities.Tarefa;
+import br.com.basis.sgt.mapstruct.TarefaMapper;
+import br.com.basis.sgt.repositories.TarefaRepository;
+import br.com.basis.sgt.services.exceptions.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,56 +14,39 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.basis.sgt.dtos.TarefaDTO;
-import br.com.basis.sgt.entities.Tarefa;
-import br.com.basis.sgt.repositories.TarefaRepository;
-import br.com.basis.sgt.services.exceptions.ObjectNotFoundException;
+import java.util.Optional;
 
 @Service
 public class TarefaService {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(TarefaService.class);
+	
 	@Autowired
 	private TarefaRepository repository;
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(TarefaService.class);
+	
 	@Autowired
-	private ModelMapper modelMapper;
+	private TarefaMapper tarefaMapper;
 	
 	@Transactional(readOnly = true)
 	public TarefaDTO findById(Long id) {
-		LOGGER.info("id service"+id);
 		Optional<Tarefa> tarefa = repository.findById(id);
 		Tarefa entity = tarefa.orElseThrow(() -> new ObjectNotFoundException("Tarefa não encontrada"));
-		LOGGER.info("toString service"+entity.toString());
-		TarefaDTO dto = modelMapper.map(entity, TarefaDTO.class);
-		LOGGER.info("toString service dto"+dto.toString());
-		
+		TarefaDTO dto = tarefaMapper.ToDto(entity);
 		return dto;
 	}
 
 	@Transactional(readOnly = true)
 	public Page<TarefaDTO> findAllPage(Pageable pageable) {
 		Page<Tarefa> list = repository.findAll(pageable);
-		Page<TarefaDTO> pageDTO = list.map( t -> modelMapper.map(t, TarefaDTO.class));
+		Page<TarefaDTO> pageDTO = list.map( t -> tarefaMapper.ToDto(t));
 		return pageDTO;
 	}
 
 	@Transactional
-	public TarefaDTO insert(TarefaDTO dto) {
-		Tarefa entity = modelMapper.map(dto, Tarefa.class);
+	public TarefaDTO salvar(TarefaDTO dto) {
+		Tarefa entity = tarefaMapper.ToEntity(dto);
 		entity = repository.save(entity);
-		TarefaDTO tarefaDto = modelMapper.map(entity, TarefaDTO.class);
-		return tarefaDto;
-	}
-
-	@Transactional
-	public TarefaDTO update(TarefaDTO dto, Long id) {
-		Tarefa entity = repository.findById(id).
-				orElseThrow(() -> new ObjectNotFoundException("Tarefa não encontrada"));
-		modelMapper.map(dto, Tarefa.class);
-		entity = repository.save(entity);
-		TarefaDTO tarefaDto = modelMapper.map(entity, TarefaDTO.class);
-		return tarefaDto;
+		return tarefaMapper.ToDto(entity);
 	}
 		
 	public void delete(Long id) {
@@ -69,7 +54,7 @@ public class TarefaService {
 			repository.deleteById(id);
 		}catch ( EmptyResultDataAccessException e) {
 			throw new ObjectNotFoundException("Tarefa não encontrada");
-		}	
+		}
 	}
 	
 }
