@@ -8,12 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @SpringBootTest
@@ -67,9 +67,9 @@ public class ResponsavelServiceIT {
 
     @Test
     public void findAllPageDeveriaTrazerResponsavel(){
-        Page<ResponsavelDTO> pag = service.findAllPage(pageRequest);
-        Assertions.assertFalse(pag.isEmpty());
-        Assertions.assertEquals(qtdResponsavel, pag.getTotalElements());
+        List<ResponsavelDTO> list = service.findAll();
+        Assertions.assertFalse(list.isEmpty());
+        Assertions.assertEquals(qtdResponsavel, list.size());
     }
 
     @Test

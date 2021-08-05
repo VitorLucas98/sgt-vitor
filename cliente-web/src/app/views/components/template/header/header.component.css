@@ -1,0 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+.header {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    background-color: #7B68EE;
+}

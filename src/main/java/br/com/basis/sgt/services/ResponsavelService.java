@@ -9,12 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ResponsavelService {
@@ -36,9 +36,9 @@ public class ResponsavelService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ResponsavelDTO> findAllPage(Pageable pageable) {
-        Page<Responsavel> list = repository.findAll(pageable);
-        Page<ResponsavelDTO> pageDTO = list.map( r -> responsavelMapper.ToDto(r));
+    public List<ResponsavelDTO> findAll() {
+        List<Responsavel> list = repository.findAll();
+        List<ResponsavelDTO> pageDTO = list.stream().map(r -> responsavelMapper.ToDto(r)).collect(Collectors.toList());
         return pageDTO;
     }
 
