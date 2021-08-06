@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Responsavel } from 'src/app/models/responsavel';
 import { ResponsavelService } from 'src/app/services/responsavel.service';
 
@@ -19,7 +20,7 @@ export class ResponsavelReadComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'nome', 'email'];
   dataSource = new MatTableDataSource<Responsavel>(this.responsaveis);
   
-  constructor(private service: ResponsavelService) { }
+  constructor(private service: ResponsavelService, private router : Router)  { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -36,6 +37,11 @@ export class ResponsavelReadComponent implements AfterViewInit {
       this.dataSource.paginator = this.paginator;
     })
   }
+
+  navigateToCreate():void{
+    this.router.navigate(['responsaveis/create'])
+  }
+
 }
 
 

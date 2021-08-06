@@ -22,8 +22,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FooterComponent } from './views/components/template/footer/footer.component';
 import { NavComponent } from './views/components/template/nav/nav.component';
 import { HomeComponent } from './views/components/template/home/home.component';
-import { TarefaReadComponent } from './views/components/tarefa/tarefa-read/tarefa-read.component';
 import { ResponsavelReadComponent } from './views/components/responsavel/responsavel-read/responsavel-read.component';
+import { ResponsavelCreateComponent } from './views/components/responsavel/responsavel-create/responsavel-create.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +32,8 @@ import { ResponsavelReadComponent } from './views/components/responsavel/respons
     FooterComponent,
     NavComponent,
     HomeComponent,
-    TarefaReadComponent,
-    ResponsavelReadComponent
+    ResponsavelReadComponent,
+    ResponsavelCreateComponent
   ],
   imports: [
     BrowserModule,

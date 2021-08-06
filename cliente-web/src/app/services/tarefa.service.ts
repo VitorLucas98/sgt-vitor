@@ -16,5 +16,4 @@ export class TarefaService {
     const url = this.baseUrl + '/tarefas'
     return this.http.get<Tarefa[]>(url);
   }
-  
 }
