@@ -2,12 +2,14 @@
     <h1>NOVO RESPONSAVEL</h1>
     <mat-form-field appearance="fill" class="field">
         <mat-label>Nome</mat-label>
-        <input [(ngModel)]='responsavel.nome' name="nome" matInput placeholder="Ex: Vitor Lucas">
+        <input [(ngModel)]="responsavel.nome" [formControl]="nome" required name="nome" maxlength="100" matInput placeholder="Ex: Vitor Lucas">
+        <mat-error *ngIf="nome.invalid">{{ errorValidName() }}</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="field">
         <mat-label>Email</mat-label>
-        <input [(ngModel)]='responsavel.email' name="email" matInput placeholder="Ex: vitor@gmail.com">
+        <input [(ngModel)]="responsavel.email" [formControl]="email" required name="email" maxlength="50" matInput placeholder="Ex: vitor@gmail.com">
+        <mat-error *ngIf="email.invalid">{{ errorValidEmail() }}</mat-error>
     </mat-form-field>
-    <button (click)="create()" mat-stroked-button color="accent">CRIAR</button>
+    <button (click)="create()" [disabled]="errorValidName() || errorValidEmail()" mat-stroked-button color="accent">CRIAR</button>
     <button (click)="cancel()" mat-stroked-button color="warn">CANCELAR</button>
 </form>
