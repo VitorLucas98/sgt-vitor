@@ -1,0 +1,58 @@
+<form class="form">
+    <h1>NOVA TAREFA</h1>
+    <mat-form-field appearance="fill" class="inputLeft">
+        <mat-label>Titulo</mat-label>
+        <input [(ngModel)]="tarefa.titulo" [formControl]="titulo" required name="titulo" maxlength="100" matInput>
+        <mat-error *ngIf="titulo.invalid">{{ errorValidTitulo() }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="inputRight">
+        <mat-label>Tipo de Tarefa</mat-label>
+        <input [(ngModel)]="tarefa.tipoTarefa" [formControl]="tipoTarefa" required name="tipoTarefa" maxlength="100" matInput>
+        <mat-error *ngIf="tipoTarefa.invalid">{{ errorValidTipoTarefa() }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="inputLeft">
+        <mat-label>Data Inicial</mat-label>
+        <input matInput [matDatepicker]="picker1" [(ngModel)]="tarefa.dataInicial" [formControl]="dataInicial" required name="dataInicial">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="inputRight">
+        <mat-label>Horário Inicial</mat-label>
+        <input matInput type="time" placeholder="" [(ngModel)]="horarioInicial" required name="horarioInicial" #time/>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill" class="inputLeft" id="dataPrevista" [(ngModel)]="tarefa.dataPrevista" [formControl]="dataPrevista" required name="dataPrevista">
+        <mat-label>Data Prevista</mat-label>
+        <input matInput [matDatepicker]="picker2">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="inputRight">
+        <mat-label>Horário Previsto</mat-label>
+        <input matInput type="time" placeholder="" [(ngModel)]="horarioInicial" required name="horarioInicial" #time/>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="inputLeft">
+        <mat-label>Status</mat-label>
+        <mat-select disableRipple required>
+            <mat-option value="0">A FAZER</mat-option>
+            <mat-option value="1">FAZENDO</mat-option>
+            <mat-option value="2">FEITO</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="inputRight">
+        <mat-label>Selecione um Responsavel</mat-label>
+        <mat-select [(value)]="tarefa.idResponsavel">
+            <mat-option *ngFor="let res of responsaveis" value="{{ res.id }}">{{ res.nome }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button [disabled]="errorValidTitulo() || errorValidDataInicial()" mat-stroked-button color="accent">CRIAR</button>
+    <button (click)="cancel()" mat-stroked-button color="warn">CANCELAR</button>
+</form>

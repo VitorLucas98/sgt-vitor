@@ -14,13 +14,28 @@ export class ResponsavelService {
   constructor(private http: HttpClient, private snack : MatSnackBar) { }
 
   findAll():Observable<Responsavel[]>{
-    const url = this.baseUrl +"/responsaveis";
+    const url = `${this.baseUrl}/responsaveis`
     return this.http.get<Responsavel[]>(url);
   }
 
+  findById(id : any):Observable<Responsavel>{
+    const url = `${this.baseUrl}/responsaveis/${id}`
+    return this.http.get<Responsavel>(url);
+  }
+
   create(responsavel : Responsavel): Observable<Responsavel>{
-    const url = this.baseUrl +"/responsaveis";
+    const url = `${this.baseUrl}/responsaveis`
     return this.http.post<Responsavel>(url, responsavel);
+  }
+
+  update(responsavel : Responsavel): Observable<Responsavel>{
+    const url = `${this.baseUrl}/responsaveis/${responsavel.id}`
+    return this.http.put<Responsavel>(url, responsavel);
+  }
+
+  delete(id : any): Observable<void>{
+    const url = `${this.baseUrl}/responsaveis/${id}`
+    return this.http.delete<void>(url);
   }
 
   message(msg: String): void{

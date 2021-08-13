@@ -24,6 +24,11 @@ import { NavComponent } from './views/components/template/nav/nav.component';
 import { HomeComponent } from './views/components/template/home/home.component';
 import { ResponsavelReadComponent } from './views/components/responsavel/responsavel-read/responsavel-read.component';
 import { ResponsavelCreateComponent } from './views/components/responsavel/responsavel-create/responsavel-create.component';
+import { ResponsavelUpdateComponent } from './views/components/responsavel/responsavel-update/responsavel-update.component';
+import { ResponsavelDeleteComponent } from './views/components/responsavel/responsavel-delete/responsavel-delete.component';
+import { TarefaReadComponent } from './views/components/tarefa/tarefa-read/tarefa-read.component';
+import { TarefaCreateComponent } from './views/components/tarefa/tarefa-create/tarefa-create.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,11 @@ import { ResponsavelCreateComponent } from './views/components/responsavel/respo
     NavComponent,
     HomeComponent,
     ResponsavelReadComponent,
-    ResponsavelCreateComponent
+    ResponsavelCreateComponent,
+    ResponsavelUpdateComponent,
+    ResponsavelDeleteComponent,
+    TarefaReadComponent,
+    TarefaCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +68,8 @@ import { ResponsavelCreateComponent } from './views/components/responsavel/respo
     MatInputModule,
     MatDatepickerModule,
     MatPaginatorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

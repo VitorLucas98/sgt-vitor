@@ -20,34 +20,36 @@ export class ResponsavelCreateComponent implements OnInit {
   nome = new FormControl('', [Validators.minLength(5)]);
   email = new FormControl('', [Validators.minLength(10)]);
 
-  constructor(private router : Router, private service : ResponsavelService) { }
+  constructor(private router: Router, private service: ResponsavelService) { }
 
   ngOnInit(): void {
   }
 
-  cancel(): void{
+  cancel(): void {
     this.router.navigate(['responsaveis'])
   }
 
-  create(): void{
+  create(): void {
     this.service.create(this.responsavel).subscribe((res) => {
       this.router.navigate(['responsaveis'])
       this.service.message('Responsavel criado com sucesso!')
-    }, erro =>{
+    }, erro => {
       if (erro.error.error.match('já cadastrado')) {
         this.service.message(erro.error.error)
+      } else if (erro.error.erros[0].message.match('Email inválido!')) {
+        this.service.message(erro.error.erros[0].message)
       }
     })
   }
 
   errorValidName() {
-    if(this.nome.invalid) {
+    if (this.nome.invalid) {
       return 'O nome deve ter entre 5 e 100 caracteres!';
     }
     return false;
   }
   errorValidEmail() {
-    if(this.email.invalid) {
+    if (this.email.invalid) {
       return 'O email deve ter mais de 10 caracteres';
     }
     return false;

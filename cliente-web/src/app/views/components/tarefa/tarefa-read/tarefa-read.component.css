@@ -32,3 +32,18 @@ table {
 #delete {
     color: #FF6347;
 }
+
+td.feito {
+    color: #00FF7F;
+    font-weight: bold;
+}
+
+td.fazendo {
+    color: #FFFF00;
+    font-weight: bold;
+}
+
+td.fazer {
+    color: #FF4500;
+    font-weight: bold;
+}

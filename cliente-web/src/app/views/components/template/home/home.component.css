@@ -2,3 +2,23 @@
     width: 93%;
     margin-left: 3rem;
 }
+
+.title {
+    font-size: 3.438rem;
+    line-height: 4.688rem;
+    letter-spacing: -0.015em;
+}
+
+.subtitle {
+    font-size: 1.563rem;
+    line-height: 2.063rem;
+    letter-spacing: -0.015em;
+}
+
+.content {
+    display: flexbox;
+}
+
+.img-container {
+    width: 100%;
+}

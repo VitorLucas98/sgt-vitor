@@ -1,0 +1,29 @@
+.form {
+    width: 40%;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 4rem;
+}
+
+.field {
+    width: 100%;
+}
+
+button {
+    width: 100%;
+    margin-bottom: .5rem;
+}
+
+.inputLeft {
+    width: 45%;
+    margin-right: 5%;
+}
+
+.inputRight {
+    width: 45%;
+    margin-left: 5%;
+}

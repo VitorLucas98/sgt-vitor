@@ -1,0 +1,13 @@
+<form class="form">
+    <h1>DELETANDO RESPONSAVEL</h1>
+    <mat-form-field appearance="fill" class="field">
+        <mat-label>Nome</mat-label>
+        <input [(ngModel)]="responsavel.nome" disabled name="nome" maxlength="100" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="field">
+        <mat-label>Email</mat-label>
+        <input [(ngModel)]="responsavel.email" disabled name="email" maxlength="50" matInput>
+    </mat-form-field>
+    <button (click)="delete()" mat-stroked-button color="warn">DELETAR</button>
+    <button (click)="cancel()" mat-stroked-button color="accent">CANCELAR</button>
+</form>

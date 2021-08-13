@@ -17,7 +17,7 @@ export class ResponsavelReadComponent implements AfterViewInit {
   responsaveis: Responsavel[] = [];
 
 
-  displayedColumns: string[] = ['id', 'nome', 'email'];
+  displayedColumns: string[] = ['id', 'nome', 'email', 'action'];
   dataSource = new MatTableDataSource<Responsavel>(this.responsaveis);
   
   constructor(private service: ResponsavelService, private router : Router)  { }
