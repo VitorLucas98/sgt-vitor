@@ -1,11 +1,19 @@
 package br.com.basis.sgt.entities;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 
-@Data
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 @Entity(name = "tb_comentario")
 public class Comentario implements Serializable {
 	private static final long serialVersionUID = 1L;

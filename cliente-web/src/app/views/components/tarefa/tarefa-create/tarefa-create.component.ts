@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ModuleWithComponentFactories, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { Responsavel } from 'src/app/models/responsavel';
 import { Tarefa } from 'src/app/models/tarefa';
 import { ResponsavelService } from 'src/app/services/responsavel.service';
@@ -15,8 +16,8 @@ export class TarefaCreateComponent implements OnInit {
 
   responsaveis: Responsavel[] = []
 
-  horarioInicial : String = '';
-  horarioPrevisto : String = '';
+  horarioInicial: String = '';
+  horarioPrevisto: String = '';
 
   tarefa: Tarefa = {
     id: '',
@@ -30,7 +31,7 @@ export class TarefaCreateComponent implements OnInit {
     idResponsavel: ''
   }
 
-  constructor(private router : Router, private reponsavelService : ResponsavelService, private service : TarefaService) { }
+  constructor(private router: Router, private reponsavelService: ResponsavelService, private service: TarefaService) { }
 
   ngOnInit(): void {
     this.listaReponsaveis();
@@ -39,7 +40,9 @@ export class TarefaCreateComponent implements OnInit {
   titulo = new FormControl('', [Validators.minLength(5)]);
   tipoTarefa = new FormControl('', [Validators.minLength(5)]);
   dataInicial = new FormControl('', [Validators.minLength(8)]);
+  horarioInicialV = new FormControl('', [Validators.minLength(5)]);
   dataPrevista = new FormControl('', [Validators.minLength(8)]);
+  horarioPrevistoV = new FormControl('', [Validators.minLength(5)]);
   dataEfetiva = new FormControl('', [Validators.minLength(8)]);
   status = new FormControl('', [Validators.minLength(5)]);
 
@@ -47,18 +50,25 @@ export class TarefaCreateComponent implements OnInit {
     this.router.navigate(['tarefas'])
   }
 
-  listaReponsaveis(): void{
-    this.reponsavelService.findAll().subscribe(res =>{
+  listaReponsaveis(): void {
+    this.reponsavelService.findAll().subscribe(res => {
       this.responsaveis = res;
     })
   }
 
   create(): void {
-    this.service.create(this.tarefa).subscribe(res => {
-     // let newDate: moment.Moment = moment.utc(this.liveForm.value.liveDate).local();
-      this.tarefa.dataInicial = this.dataInicial 
+    let newDataInicial: moment.Moment = moment.utc(this.tarefa.dataInicial).local();
+    this.tarefa.dataInicial = newDataInicial.format('DD/MM/YYYY') + ' ' + this.horarioInicial;
 
+    let newDataPrevista: moment.Moment = moment.utc(this.tarefa.dataPrevista).local();
+    this.tarefa.dataPrevista = newDataPrevista.format('DD/MM/YYYY') + ' ' + this.horarioPrevisto;
+
+    this.service.create(this.tarefa).subscribe((res) => {
+      console.log(res)
+      this.service.message("Tarefa criada com sucesso!");
+      this.router.navigate(['tarefas'])
     })
+
   }
 
   errorValidTitulo() {
@@ -82,6 +92,13 @@ export class TarefaCreateComponent implements OnInit {
     return false;
   }
 
+  errorValidHorarioInicial() {
+    if (this.horarioInicialV.invalid) {
+      return 'Horario invalido';
+    }
+    return false;
+  }
+
   errorValidDataPrevista() {
     if (this.dataPrevista.invalid) {
       return 'Data invalida';
@@ -89,10 +106,12 @@ export class TarefaCreateComponent implements OnInit {
     return false;
   }
 
-  errorValidDataEfetiva() {
-    if (this.dataEfetiva.invalid) {
-      return 'Data invalida';
+  errorValidHorarioPrevisto() {
+    if (this.horarioPrevistoV.invalid) {
+      return 'Horario invalido';
     }
     return false;
   }
 }
+
+

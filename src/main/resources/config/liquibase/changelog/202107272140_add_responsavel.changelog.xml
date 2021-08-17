@@ -7,7 +7,9 @@
                 <constraints primaryKey="true"/>
             </column>
 
-            <column name="email" type="varchar(50)"/>
+            <column name="email" type="varchar(60)">
+                <constraints  nullable="false" unique="true" uniqueConstraintName="true"/>
+            </column>
             <column name="nome" type="varchar(50)"/>
         </createTable>
     </changeSet>

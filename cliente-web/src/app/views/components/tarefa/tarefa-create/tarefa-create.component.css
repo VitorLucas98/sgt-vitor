@@ -27,3 +27,12 @@ button {
     width: 45%;
     margin-left: 5%;
 }
+
+.comentarios {
+    width: 100%;
+}
+
+textarea {
+    min-height: 4rem;
+    max-height: 10rem;
+}

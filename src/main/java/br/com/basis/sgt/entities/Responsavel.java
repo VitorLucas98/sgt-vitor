@@ -1,13 +1,20 @@
 package br.com.basis.sgt.entities;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 @Entity(name = "tb_responsavel")
-public class Responsavel {
+public class Responsavel implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +24,7 @@ public class Responsavel {
 
 	private String email;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "responsavel")
 	private List<Tarefa> tarefas;
 	

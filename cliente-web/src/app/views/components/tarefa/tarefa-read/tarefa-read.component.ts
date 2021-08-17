@@ -49,6 +49,7 @@ export class TarefaReadComponent implements AfterViewInit {
     })
   }
 
+
   status(x: any){
     if (x == 'A_FAZER') {
       return 'fazer';

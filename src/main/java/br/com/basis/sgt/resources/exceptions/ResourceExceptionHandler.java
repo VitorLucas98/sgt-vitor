@@ -1,10 +1,7 @@
 package br.com.basis.sgt.resources.exceptions;
 
-import java.time.LocalDateTime;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.data.mapping.PropertyReferenceException;
+import br.com.basis.sgt.services.exceptions.ObjectNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -12,7 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import br.com.basis.sgt.services.exceptions.ObjectNotFoundException;
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -24,15 +22,16 @@ public class ResourceExceptionHandler {
 				"Objeto não encontrado !", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(error);
 	}
-	
-	@ExceptionHandler(PropertyReferenceException.class)
-	public ResponseEntity<StandardError> propetiesNotFound(PropertyReferenceException e, HttpServletRequest request){
-		HttpStatus status = HttpStatus.NOT_FOUND;
-		StandardError error = new StandardError(LocalDateTime.now(), status.value(), 
-				"Erro no preenchimento das propriedades contidas na url !", e.getMessage(), request.getRequestURI());
-		return ResponseEntity.status(status).body(error);
+
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<StandardError> objectNotFoundException(DataIntegrityViolationException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError error = new StandardError(LocalDateTime.now(), status.value(),
+				"Erro de integridade referencial!", e.getMessage(), request.getRequestURI());
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
-	
+
 	@ExceptionHandler(MethodArgumentNotValidException .class)
 	public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException  e, HttpServletRequest request){
 		HttpStatus status = HttpStatus.BAD_REQUEST;

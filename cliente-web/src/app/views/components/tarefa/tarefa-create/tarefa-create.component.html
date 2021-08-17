@@ -15,34 +15,38 @@
     <mat-form-field appearance="fill" class="inputLeft">
         <mat-label>Data Inicial</mat-label>
         <input matInput [matDatepicker]="picker1" [(ngModel)]="tarefa.dataInicial" [formControl]="dataInicial" required name="dataInicial">
+        <mat-error *ngIf="dataInicial.invalid">{{ errorValidDataInicial() }}</mat-error>
         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="inputRight">
         <mat-label>Horário Inicial</mat-label>
-        <input matInput type="time" placeholder="" [(ngModel)]="horarioInicial" required name="horarioInicial" #time/>
+        <input matInput type="time" placeholder="" [(ngModel)]="horarioInicial" required [formControl]="horarioInicialV" name="horarioInicial" #time/>
+        <mat-error *ngIf="horarioInicialV.invalid">{{ errorValidHorarioInicial() }}</mat-error>
     </mat-form-field>
 
 
-    <mat-form-field appearance="fill" class="inputLeft" id="dataPrevista" [(ngModel)]="tarefa.dataPrevista" [formControl]="dataPrevista" required name="dataPrevista">
+    <mat-form-field appearance="fill" class="inputLeft" id="dataPrevista">
         <mat-label>Data Prevista</mat-label>
-        <input matInput [matDatepicker]="picker2">
+        <input matInput [matDatepicker]="picker2" [(ngModel)]="tarefa.dataPrevista" [formControl]="dataPrevista" required name="dataPrevista">
+        <mat-error *ngIf="dataPrevista.invalid">{{ errorValidDataPrevista() }}</mat-error>
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="inputRight">
         <mat-label>Horário Previsto</mat-label>
-        <input matInput type="time" placeholder="" [(ngModel)]="horarioInicial" required name="horarioInicial" #time/>
+        <input matInput type="time" placeholder="" [(ngModel)]="horarioPrevisto" [formControl]="horarioPrevistoV" required name="horarioPrevisto" #time/>
+        <mat-error *ngIf="horarioPrevistoV.invalid">{{ errorValidHorarioPrevisto() }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="inputLeft">
         <mat-label>Status</mat-label>
-        <mat-select disableRipple required>
-            <mat-option value="0">A FAZER</mat-option>
-            <mat-option value="1">FAZENDO</mat-option>
-            <mat-option value="2">FEITO</mat-option>
+        <mat-select disableRipple required [(value)]="tarefa.status">
+            <mat-option value="A_FAZER">A FAZER</mat-option>
+            <mat-option value="FAZENDO">FAZENDO</mat-option>
+            <mat-option value="FEITO">FEITO</mat-option>
         </mat-select>
     </mat-form-field>
 
@@ -53,6 +57,14 @@
         </mat-select>
     </mat-form-field>
 
-    <button [disabled]="errorValidTitulo() || errorValidDataInicial()" mat-stroked-button color="accent">CRIAR</button>
+    <mat-form-field class="comentarios">
+        <mat-label>Adicione os comentarios da tarefa</mat-label>
+        <textarea name="comentarios" matInput maxlength="255"></textarea>
+    </mat-form-field>
+
+    <button (click)="create()" mat-stroked-button color="accent" [disabled]="errorValidTitulo() || errorValidTipoTarefa() || 
+    errorValidDataInicial() || errorValidHorarioInicial() ||errorValidDataPrevista() || errorValidHorarioPrevisto()
+    ">CRIAR</button>
+
     <button (click)="cancel()" mat-stroked-button color="warn">CANCELAR</button>
 </form>

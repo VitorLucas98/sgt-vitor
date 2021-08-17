@@ -11,13 +11,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @SpringBootTest
@@ -32,13 +30,11 @@ public class TarefaServiceIT {
     private long idExistente;
     private long idNaoExistente;
     private int quantidadeTarefas;
-    private PageRequest pageRequest;
 
     @BeforeEach
     void setUp() throws  Exception{
         idExistente = 2L;
         idNaoExistente = 1000L;
-        pageRequest = PageRequest.of(0, 10, Sort.Direction.ASC, "dataInicial");
         quantidadeTarefas = 2;
     }
 
@@ -71,9 +67,9 @@ public class TarefaServiceIT {
 
     @Test
     public void findAllPageDeveriaTrazerTarefas(){
-        Page<TarefaDTO> pag = service.findAllPage(pageRequest);
-        Assertions.assertFalse(pag.isEmpty());
-        Assertions.assertEquals(quantidadeTarefas, pag.getTotalElements());
+        List<TarefaDTO> list = service.findAll();
+        Assertions.assertFalse(list.isEmpty());
+        Assertions.assertEquals(quantidadeTarefas, list.size());
     }
    @Test
     public void savarDeveriaPersistirNovaEntidadeComIdAutoIncrementavel(){

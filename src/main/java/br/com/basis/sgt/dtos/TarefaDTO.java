@@ -2,15 +2,22 @@ package br.com.basis.sgt.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import enums.StatusTarefa;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
-public class TarefaDTO {
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+public class TarefaDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 
 	private Long id;

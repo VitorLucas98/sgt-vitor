@@ -5,16 +5,18 @@ import br.com.basis.sgt.entities.Tarefa;
 import br.com.basis.sgt.mapstruct.TarefaMapper;
 import br.com.basis.sgt.repositories.TarefaRepository;
 import br.com.basis.sgt.services.exceptions.ObjectNotFoundException;
+import enums.StatusTarefa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TarefaService {
@@ -36,15 +38,18 @@ public class TarefaService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<TarefaDTO> findAllPage(Pageable pageable) {
-		Page<Tarefa> list = repository.findAll(pageable);
-		Page<TarefaDTO> pageDTO = list.map( t -> tarefaMapper.ToDto(t));
+	public List<TarefaDTO> findAll() {
+		List<Tarefa> list = repository.findAll();
+		List<TarefaDTO> pageDTO = list.stream().map( t -> tarefaMapper.ToDto(t)).collect(Collectors.toList());
 		return pageDTO;
 	}
 
 	@Transactional
 	public TarefaDTO salvar(TarefaDTO dto) {
 		Tarefa entity = tarefaMapper.ToEntity(dto);
+		if (entity.getStatus().equals(StatusTarefa.FEITO)){
+			entity.setDataEfetiva(LocalDateTime.now());
+		}
 		entity = repository.save(entity);
 		return tarefaMapper.ToDto(entity);
 	}
