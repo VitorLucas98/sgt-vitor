@@ -15,8 +15,11 @@ export class TarefaReadComponent implements AfterViewInit {
 
   tarefas: Tarefa[] = [];
 
+  tarefaUnic!: Tarefa;
 
-  displayedColumns: string[] = ['id', 'titulo', 'tipoTarefa', 'dataInicial', 'dataPrevista', 'dataEfetiva', 'status', 'idResponsavel', 'action'];
+
+  displayedColumns: string[] = ['id', 'titulo', 'tipoTarefa', 'dataInicial', 'dataPrevista', 
+  'dataEfetiva', 'status', 'idResponsavel', 'comentarios', 'action'];
   dataSource = new MatTableDataSource<Tarefa>(this.tarefas);
   
   constructor(private service: TarefaService, private router : Router, private responsavelService : ResponsavelService)  { }
@@ -49,6 +52,10 @@ export class TarefaReadComponent implements AfterViewInit {
     })
   }
 
+  findComents(element:Tarefa):void{
+    this.tarefaUnic = element;
+    this.router.navigate(['tarefas/comentarios'])
+  }
 
   status(x: any){
     if (x == 'A_FAZER') {
@@ -60,3 +67,4 @@ export class TarefaReadComponent implements AfterViewInit {
     }
   }
 }
+

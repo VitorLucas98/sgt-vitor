@@ -1,5 +1,5 @@
 <form class="form">
-    <h1>NOVA TAREFA</h1>
+    <h1>ATUALIZANDO TAREFA</h1>
     <mat-form-field appearance="fill" class="inputLeft">
         <mat-label>Titulo</mat-label>
         <input [(ngModel)]="tarefa.titulo" [formControl]="titulo" required name="titulo" maxlength="100" matInput>
@@ -62,13 +62,9 @@
         <textarea name="comentarios" matInput maxlength="255"></textarea>
     </mat-form-field>
 
-    <div class="button-comentario">
-        <button mat-stroked-button color="primary">Add Comentario</button>
-    </div>
-
-    <button (click)="create()" mat-stroked-button color="accent" [disabled]="errorValidTitulo() || errorValidTipoTarefa() || 
+    <button (click)="update()" mat-stroked-button color="accent" [disabled]="errorValidTitulo() || errorValidTipoTarefa() || 
     errorValidDataInicial() || errorValidHorarioInicial() ||errorValidDataPrevista() || errorValidHorarioPrevisto()
-    ">CRIAR</button>
+    ">ATUALIZAR</button>
 
     <button (click)="cancel()" mat-stroked-button color="warn">CANCELAR</button>
 </form>

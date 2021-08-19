@@ -18,9 +18,24 @@ export class TarefaService {
     return this.http.get<Tarefa[]>(url);
   }
 
+  findById(id : any):Observable<Tarefa>{
+    const url = `${this.baseUrl}/tarefas/${id}`
+    return this.http.get<Tarefa>(url);
+  }
+
   create(tarefa : Tarefa): Observable<Tarefa>{
     const url = `${this.baseUrl}/tarefas`;
     return this.http.post<Tarefa>(url, tarefa);
+  }
+
+  update(tarefa : Tarefa): Observable<Tarefa>{
+    const url = `${this.baseUrl}/tarefas/${tarefa.id}`;
+    return this.http.put<Tarefa>(url, tarefa);
+  }
+
+  delete(id : any): Observable<void>{
+    const url = `${this.baseUrl}/tarefas/${id}`;
+    return this.http.delete<void>(url);
   }
 
   message(msg: String): void {

@@ -7,9 +7,9 @@
                 <constraints primaryKey="true"/>
             </column>
 
-            <column name="data_efetiva" type="date"/>
-            <column name="data_inicial" type="date"/>
-            <column name="data_prevista" type="date"/>
+            <column name="data_efetiva" type="timestamp"/>
+            <column name="data_inicial" type="timestamp"/>
+            <column name="data_prevista" type="timestamp"/>
             <column name="status" type="varchar(20)"/>
             <column name="tipo_tarefa" type="varchar(80)"/>
             <column name="titulo" type="varchar(80)"/>

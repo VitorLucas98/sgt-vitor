@@ -1,6 +1,6 @@
-import { Component, ModuleWithComponentFactories, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { Responsavel } from 'src/app/models/responsavel';
 import { Tarefa } from 'src/app/models/tarefa';
@@ -8,12 +8,13 @@ import { ResponsavelService } from 'src/app/services/responsavel.service';
 import { TarefaService } from 'src/app/services/tarefa.service';
 
 @Component({
-  selector: 'app-tarefa-create',
-  templateUrl: './tarefa-create.component.html',
-  styleUrls: ['./tarefa-create.component.css']
+  selector: 'app-tarefa-update',
+  templateUrl: './tarefa-update.component.html',
+  styleUrls: ['./tarefa-update.component.css']
 })
-export class TarefaCreateComponent implements OnInit {
+export class TarefaUpdateComponent implements OnInit {
 
+  id_tarefa = ''
   responsaveis: Responsavel[] = []
 
   horarioInicial: String = '';
@@ -31,10 +32,12 @@ export class TarefaCreateComponent implements OnInit {
     idResponsavel: ''
   }
 
-  constructor(private router: Router, private reponsavelService: ResponsavelService, private service: TarefaService) { }
+  constructor(private router : Router, private service : TarefaService, private reponsavelService : ResponsavelService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.id_tarefa = this.route.snapshot.paramMap.get('id')!
     this.listaReponsaveis();
+    this.findByid();
   }
 
   titulo = new FormControl('', [Validators.minLength(5)]);
@@ -46,8 +49,21 @@ export class TarefaCreateComponent implements OnInit {
   dataEfetiva = new FormControl('', [Validators.minLength(8)]);
   status = new FormControl('', [Validators.minLength(5)]);
 
-  cancel(): void {
+  cancel(): void{
     this.router.navigate(['tarefas'])
+  }
+
+  update(): void{
+    let newDataInicial: moment.Moment = moment.utc(this.tarefa.dataInicial).local();
+    this.tarefa.dataInicial = newDataInicial.format('DD/MM/YYYY') + ' ' + this.horarioInicial;
+
+    let newDataPrevista: moment.Moment = moment.utc(this.tarefa.dataPrevista).local();
+    this.tarefa.dataPrevista = newDataPrevista.format('DD/MM/YYYY') + ' ' + this.horarioPrevisto;
+
+    this.service.update(this.tarefa).subscribe( res =>{
+      this.router.navigate(['tarefas']);
+      this.service.message('Tarefa atualizada com sucesso!');
+    })
   }
 
   listaReponsaveis(): void {
@@ -56,24 +72,12 @@ export class TarefaCreateComponent implements OnInit {
     })
   }
 
-  create(): void {
-    let newDataInicial: moment.Moment = moment.utc(this.tarefa.dataInicial).local();
-    this.tarefa.dataInicial = newDataInicial.format('DD/MM/YYYY') + ' ' + this.horarioInicial;
-
-    let newDataPrevista: moment.Moment = moment.utc(this.tarefa.dataPrevista).local();
-    this.tarefa.dataPrevista = newDataPrevista.format('DD/MM/YYYY') + ' ' + this.horarioPrevisto;
-
-    this.service.create(this.tarefa).subscribe((res) => {
-      this.service.message("Tarefa criada com sucesso!");
-      this.router.navigate(['tarefas'])
-    }, erro => {
-      if (erro.error.erros[0].message.match('A data deve ser do futuro') || 
-      erro.error.erros[1].message.match('A data deve ser do futuro')) {
-        this.service.message(erro.error.erros[0].message)
-      }
-    })
+  findByid(): void{
+    this.service.findById(this.id_tarefa).subscribe(res =>{
+      this.tarefa = res
+    });
   }
-  
+
   errorValidTitulo() {
     if (this.titulo.invalid) {
       return 'O titulo deve ter entre 5 e 20 caracteres!';
@@ -116,5 +120,3 @@ export class TarefaCreateComponent implements OnInit {
     return false;
   }
 }
-
-

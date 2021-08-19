@@ -30,6 +30,8 @@ import { TarefaReadComponent } from './views/components/tarefa/tarefa-read/taref
 import { TarefaCreateComponent } from './views/components/tarefa/tarefa-create/tarefa-create.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ComentarioReadComponent } from './views/components/comentario/comentario-read/comentario-read.component';
+import { TarefaUpdateComponent } from './views/components/tarefa/tarefa-update/tarefa-update.component';
+import { TarefaDeleteComponent } from './views/components/tarefa/tarefa-delete/tarefa-delete.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { ComentarioReadComponent } from './views/components/comentario/comentari
     ResponsavelDeleteComponent,
     TarefaReadComponent,
     TarefaCreateComponent,
-    ComentarioReadComponent
+    ComentarioReadComponent,
+    TarefaUpdateComponent,
+    TarefaDeleteComponent
   ],
   imports: [
     BrowserModule,

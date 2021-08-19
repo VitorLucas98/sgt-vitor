@@ -1,0 +1,42 @@
+<form class="form">
+    <h1>DELETANDO TAREFA</h1>
+    <mat-form-field appearance="fill" class="inputLeft">
+        <mat-label>Titulo</mat-label>
+        <input [(ngModel)]="tarefa.titulo" disabled name="titulo" maxlength="100" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="inputRight">
+        <mat-label>Tipo de Tarefa</mat-label>
+        <input [(ngModel)]="tarefa.tipoTarefa" disabled name="tipoTarefa" maxlength="100" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="inputLeft">
+        <mat-label>Data Inicial</mat-label>
+        <input [(ngModel)]="tarefa.dataInicial" name="dataInicial" disabled matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="inputRight">
+        <mat-label>Data Prevista</mat-label>
+        <input [(ngModel)]="tarefa.dataPrevista" name="dataPrevista" disabled matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="inputLeft">
+        <mat-label>Status</mat-label>
+        <input [(ngModel)]="tarefa.status" name="status" disabled matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="inputRight">
+        <mat-label>Responsavel</mat-label>
+        <input [(ngModel)]="tarefa.idResponsavel" name="idResponsavel" disabled matInput>
+    </mat-form-field>
+
+
+    <mat-form-field class="comentarios">
+        <mat-label>Comentarios</mat-label>
+        <textarea name="comentarios" matInput maxlength="255" disabled></textarea>
+    </mat-form-field>
+
+    <button (click)="delete()" mat-stroked-button color="warn">DELETAR</button>
+    <button (click)="cancel()" mat-stroked-button color="accent">CANCELAR</button>
+
+</form>
