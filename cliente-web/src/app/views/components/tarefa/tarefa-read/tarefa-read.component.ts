@@ -1,10 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { DataTarefaService } from 'src/app/data-tarefa.service';
 import { Tarefa } from 'src/app/models/tarefa';
 import { ResponsavelService } from 'src/app/services/responsavel.service';
 import { TarefaService } from 'src/app/services/tarefa.service';
+import { ComentarioReadComponent } from '../../comentario/comentario-read/comentario-read.component';
 
 @Component({
   selector: 'app-tarefa-read',
@@ -22,12 +25,24 @@ export class TarefaReadComponent implements AfterViewInit {
   'dataEfetiva', 'status', 'idResponsavel', 'comentarios', 'action'];
   dataSource = new MatTableDataSource<Tarefa>(this.tarefas);
   
-  constructor(private service: TarefaService, private router : Router, private responsavelService : ResponsavelService)  { }
+  constructor(private service: TarefaService, 
+              private router : Router, 
+              private responsavelService : ResponsavelService,
+              public dialog: MatDialog,
+              private dataTarefaService : DataTarefaService)  { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.findAll();
+  }
+
+  openDialog(element:Tarefa) {
+    this.dataTarefaService.setTarefa(element);
+    const dialogRef = this.dialog.open(ComentarioReadComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   findAll(): void {
@@ -46,15 +61,9 @@ export class TarefaReadComponent implements AfterViewInit {
   listarResponsaveis():void{
     this.tarefas.forEach(x =>{
       this.responsavelService.findById(x.idResponsavel).subscribe(res =>{
-        console.log(res)
         x.idResponsavel = res.nome
       })
     })
-  }
-
-  findComents(element:Tarefa):void{
-    this.tarefaUnic = element;
-    this.router.navigate(['tarefas/comentarios'])
   }
 
   status(x: any){

@@ -1,0 +1,12 @@
+.container {
+    width: 30rem;
+}
+
+.title {
+    text-align: center;
+}
+
+.subtitle {
+    font-weight: bold;
+    color: #fff;
+}

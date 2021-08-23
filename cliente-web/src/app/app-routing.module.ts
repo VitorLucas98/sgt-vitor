@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ComentarioReadComponent } from './views/components/comentario/comentario-read/comentario-read.component';
 import { ResponsavelCreateComponent } from './views/components/responsavel/responsavel-create/responsavel-create.component';
 import { ResponsavelDeleteComponent } from './views/components/responsavel/responsavel-delete/responsavel-delete.component';
 import { ResponsavelReadComponent } from './views/components/responsavel/responsavel-read/responsavel-read.component';
@@ -47,10 +46,6 @@ const routes: Routes = [
   {
     path:'tarefas/delete/:id',
     component: TarefaDeleteComponent
-  },
-  {
-    path:'tarefas/comentarios',
-    component: ComentarioReadComponent
   }
 ];
 
