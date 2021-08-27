@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DataTarefaService } from 'src/app/data-tarefa.service';
+import { DataTarefaService } from 'src/app/services/data-tarefa.service';
 import { Tarefa } from 'src/app/models/tarefa';
 
 @Component({
@@ -9,7 +9,7 @@ import { Tarefa } from 'src/app/models/tarefa';
 })
 export class ComentarioReadComponent implements OnInit {
 
-  @Input() tarefa!: Tarefa;
+tarefa!: Tarefa;
 
   constructor(private dataTarefaService: DataTarefaService) { }
 

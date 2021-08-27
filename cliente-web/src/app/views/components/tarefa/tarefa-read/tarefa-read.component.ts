@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { DataTarefaService } from 'src/app/data-tarefa.service';
+import { DataTarefaService } from 'src/app/services/data-tarefa.service';
 import { Tarefa } from 'src/app/models/tarefa';
 import { ResponsavelService } from 'src/app/services/responsavel.service';
 import { TarefaService } from 'src/app/services/tarefa.service';
